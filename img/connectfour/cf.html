@@ -1,0 +1,127 @@
+
+<html>
+<head>	
+<title>Connect Four (WebFX)</title>
+<link rel="stylesheet" type="text/css" href="webfx.css" />
+
+<script type="text/javascript">
+<!--
+
+function launch() {
+	open("connectfour.html", "","toolbar=no, status=no, width=485, height=420");
+}
+
+//-->
+</script>
+
+</head>
+
+<body>
+
+<script type="text/javascript" src="includeHeading.js"></script>
+<script type="text/javascript">
+	includeHeading("Connect Four","connectfour.zip");
+</script>
+
+<h2>Introduction</h2>
+
+<p>This is one of the more classic "board" games. The game is for two players and the goal of the game is to get four tokens of your own color in a row. Once one player gets four tokens in a row he wins. If the board is full the game ends in a draw. The real game board is standing up so all the tokens fall down as far as possible.</p>
+
+<h2>Playing the Game</h2>
+
+<p>The game is played against a computer player and to place your token you click on a column. You should also notice that you can change the level of the computer skill. Selecting a high value will lead to a really long wait but then the computer will be a lot better. (More about this in the algorithm explanation.)</p>
+
+<p><a href="connectfour.html" onclick="launch(); return false;" title="This will be opened in a new window">Launch the game</a></p>
+
+<h2>The interface</h2>
+
+<p>The interface is made without any images. Instead the circle symbol from the Webdings font has been heavily used. If anyone wants to create an interface with images then this would be playable in Netscape Navigator 3.x as well. The dialogue window is just a basic layer with the <a href="../genmove/genmove.shtml">generic move</a> script attached to it. The border is once again made with the circle symbol of the webdings font.</p>
+
+<h2>The Computer Algorithm</h2>
+
+<p>The algorithm used to calculate the moves of the computer is called the <a href="http://dir.yahoo.com/Science/Computer_Science/Algorithms/Minimax/" title="See the Yahoo section for the minimax algorithm">minimax</a> method and it is one of the most used algorithms for board games. The basic idea is to calculate a value of the current game state (a high value is good for the computer) and then when it is the computer's turn you try to maximize the value. To prevent the computer to do a bad move the computer must also see a few steps ahead. For example in chess the player might think that it is good to take a pawn, but in the next move he might loose his queen, which might be exactly the right thing to do if it leads to victory. So what the algorithm does is that it creates (implicitly) a game tree where it alternates between selecting the largest respectively the smallest value (representing the computer and human doing the best possible moves) at each level.</p>
+
+<p>Below is some pseudo code to show you how it works. The computer is playing black and thus tries to maximize its value while minimizing the white's values. One thing to notice is that an actual value of how good the sequence of moves are is only calculated in a leaf.</p>
+
+<pre>
+value = -Infinity
+
+for each position pos that is a successor of currentPlayState do
+   b = black(pos, depth)
+   if b &gt;= value then
+      value = b
+      bestMove = pos
+</pre>
+
+<p>Where the functions black and white are defined as follows:</p>
+
+<pre>	  
+function black(pos, depth)
+   if depth == 0 or pos has no successor then
+      return eval(pos)
+   else
+      return min{white(x, depth-1) | x is a successor of pos}
+	  
+function white(pos, depth)
+   if depth == 0 or pos has no successor then
+      return eval(pos)
+   else
+      return max{black(x, depth-1) | x is a successor of pos}
+
+</pre>
+
+<p>These function can be combined to one and there is also a need to check whether there is a winner (or draw) before reaching a leaf.</p>
+
+<h2>Improving the performance</h2>
+
+<p>Although you might think that the performance of this game sucks (and yes it does due to the fact that JScript is slow) there are some tricks that really does improve the performance. The main improvement is made with a so called <a href="http://ink.yahoo.com/bin/query?p=alpha+beta+pruning&hc=0&hs=0" title="See more details about this technique">Alpha- Beta pruning</a>. The basic idea is that some subtrees can't improve the result. For example if you want the max value at a level and you get a value that is smaller than the previous max you are sure that you can't get anything better because the level below is taking the min value. This is much easier understood with an example.</p>
+
+<pre>
+        --------------A--------------       max
+       /              |              \
+      B               C               D     min
+   /  |  \          /   \           /   \
+ E    F   G       H      I         J     K  max
+/ \  / \ / \     / \    / \       / \   / \
+L M  N O P Q     R S    T U       V W   X Y min
+7 6  8 5 2 3     0 -2   6 2       5 8   9 2
+</pre>
+
+<p>Start to reduce this tree from the left</p>
+
+<pre>
+
+        --------------A--------------       max
+       /              |              \
+      B               C               D     min
+   /  |  \          /   \           /   \
+ E    F   G       H      I         J     K  max
+ 6    5   2      / \    / \       / \   / \
+                 R S    T U       V W   X Y min
+                 0 -2   6 2       5 8   9 2
+
+
+        --------------A--------------       max
+       /              |              \
+      B               C               D     min
+      6               2             /   \
+                                   J     K  max
+                                   5    / \
+                                        X Y min
+                                        9 2
+</pre>
+
+<p>Now there is no idea to calculate the value from the tree K because A will get the value 2 whatever value K returns (try for yourself).</p>
+
+<p><a href="connectfour.html" onclick="launch(); return false;" title="This will be opened in a new window">Launch the game</a><br>
+<a href="http://webfx.eae.net/webboard/index.cgi?action=display&group=admin/artgroup&id=6" target="_top">Discuss this article</a></p>
+
+
+<p class="author">Author: Erik Arvidsson</p>
+
+<!--#include virtual="/footer.html" -->
+
+</div>
+</body>
+</html>
+

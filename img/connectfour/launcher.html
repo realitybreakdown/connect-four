@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<title>DHTML Connect Four Launcher - WebFX</title>
+
+<style type="text/css"> 
+<!--
+
+body	{background: white; color: black; font-family: "comic sans ms"; font-size: 12px;}
+a		{color: red;}
+
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+
+function goFour() {
+	launch();
+	window.history.back();
+}
+
+function launch() {
+	open("connectfour.html", "","toolbar=no, status=no, width=485, height=420");
+}
+
+window.onload = goFour;
+
+//-->
+</script>
+
+</head>
+<body>
+
+<p>Now launching 
+<a href="connectfour.html" onclick="launch(); return false;">DHTML Connect Four</a>
+</p>
+
+</body>
+</html>
