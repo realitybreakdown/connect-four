@@ -1,21 +1,18 @@
 /*----- constants -----*/
 
 var playerLookup = {
-    '1': 'red', // Player 1
-    '-1': 'yellow', //Player 2 
+    '1': 'yellow', // Player 1
+    '-1': 'red', //Player 2 
     'null': 'white' 
 };
-
-//const cells = document.querySelectorAll('.cell');
 
 /*----- app's state (variables) -----*/
 
 var board, winner, turn;
 
-
 /*----- cached element references -----*/
 
-// var circles = document.querySelectorAll('td');
+
 
 /*----- event listeners -----*/
 
@@ -27,6 +24,7 @@ document.querySelector('footer > button').addEventListener('click', initialize);
 initialize();
 
 function initialize() {
+    if (winner == true) return false;
     board = [
         [null,null,null,null,null,null],
         [null,null,null,null,null,null],
@@ -35,6 +33,7 @@ function initialize() {
         [null,null,null,null,null,null],
         [null,null,null,null,null,null],
         [null,null,null,null,null,null]
+        
     ];
     winner = null;
     turn = 1;
@@ -53,6 +52,7 @@ function render() {
         });
     });
 }
+
 function boardClick(evt) {
     var target = evt.target;
     if (target.tagName !== 'TD') return;
@@ -62,77 +62,53 @@ function boardClick(evt) {
     var row = board[col].indexOf(null);
     board[col][row] = turn;
     turn *= -1;
-    // winner = getWinner();
+    winner = checkWinner();
     render();
+    // checkWinner();
+    
 }
 
-// for (var x = 0; x <= 7; x = x + 1) {
-//     for (var y = 0; y <= 6; y = y + 1) {
-//       console.log(`col${x}row${y}`);
-//     }
-//    }
+function getWinner() {
+    for (var colIdx = 0; colIdx < board.length; colIdx++) {
+         for (var rowIdx = 0; rowIdx < board[colIdx].length; rowIdx++) {
+         if (board[colIdx][rowIdx] === null) break; 
+         //  winner = checkWinner();
+            if (winner) break; 
+
+            console.log(colIdx, rowIdx, turn);
+        };
+        if (winner) break;
+    };
+};
 
 
-// function getWinner(board, col, row) {
-//     for (var y = 0; y < col; y++) {
-//         var consecutive = 0;
-//         for (var x = 0; x < row; x++) {
-//         if (board[y][x] == 1) {
-//             consecutive++;
-//             if (consecutive == 4) {
-//             return true;
-//             }
-//         }
-//         }
-//     }
-//     return false;
-// }
-
-
-function chkLine(a,b,c,d) {
-    // Check first cell non-zero and all cells match
-    return ((a != null) && (a ==b) && (a == c) && (a == d));
+function checkWinner() { 
+    // vertical
+    for (colIdx = 0; colIdx < 3; colIdx++)
+        for (rowIdx = 0; rowIdx < 4; rowIdx++) {
+            Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx+1] + board[colIdx][rowIdx+2] + board[colIdx][rowIdx+3]) === 4 ?   board[colIdx][rowIdx] : null;
+                
+        }
+        
+        // horizontal
+        for (colIdx = 0; colIdx < 3; colIdx++)
+            for (rowIdx = 0; rowIdx < 5; rowIdx++) {
+                        Math.abs(board[colIdx][rowIdx] + board[colIdx+1][rowIdx] + board[colIdx+2][rowIdx] + board[colIdx+3][rowIdx]) === 4 ?  board[colIdx][rowIdx] : null;
+            }
+        
+            // diagonal up
+            for (colIdx = 0; colIdx < 3; colIdx++)
+                for (rowIdx = 0; rowIdx < 7; rowIdx++) {
+                    Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx+1] + board[colIdx][rowIdx+2] + board[colIdx][rowIdx+3]) === 4 ?  board[colIdx][rowIdx] : null;
+                }
+            
+            // diagonal down 
+            for (colIdx = 0; colIdx < 3; colIdx++)
+                for (rowIdx = 0; rowIdx < 7; rowIdx++) {
+                    Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx-1] + board[colIdx][rowIdx-2] + board[colIdx][rowIdx-3]) === 4 ?  board[colIdx][rowIdx] : null;
+                }
+               
 }
-
-function getWinner(bd) {
-    // Check down
-    for (r = null; r < 3; r++)
-        for (c = null; c < 7; c++)
-            if (chkLine(bd[r][c], bd[r+1][c], bd[r+2][c], bd[r+3][c]))
-                return bd[r][c];
-
-    // Check right
-    for (r = null; r < 6; r++)
-        for (c = null; c < 4; c++)
-            if (chkLine(bd[r][c], bd[r][c+1], bd[r][c+2], bd[r][c+3]))
-                return bd[r][c];
-
-    // Check down-right
-    for (r = null; r < 3; r++)
-        for (c = null; c < 4; c++)
-            if (chkLine(bd[r][c], bd[r+1][c+1], bd[r+2][c+2], bd[r+3][c+3]))
-                return bd[r][c];
-
-    // Check down-left
-    for (r = 3; r < 6; r++)
-        for (c = null; c < 4; c++)
-            if (chkLine(bd[r][c], bd[r-1][c+1], bd[r-2][c+2], bd[r-3][c+3]))
-                return bd[r][c];
-
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
