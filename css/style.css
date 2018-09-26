@@ -63,18 +63,15 @@ td:hover {
     text-decoration: none;
 }
 
-
-#divMess {
+#displayMess {
     background-color: red;
     position: fixed;
     width: 200px;
     height: 200px;
-    top: 50%;
-    left: 45%;
-}
-
-#displayMess {
-    background-color: green;
+    top: 40%;
+    left: 44%;
+    display: none;
+    text-transform: uppercase;
 }
 
 #resbtn {
@@ -88,5 +85,18 @@ h1 {
     text-align: center;
 }
 
-
+#message {
+    background-color: orange;
+    width: 143px;
+    height: 32px;
+    position: absolute;
+    left: 47%;
+    top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 35px;
+    border-radius: 9px;
+    box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5);
+}
 

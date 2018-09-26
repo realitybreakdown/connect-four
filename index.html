@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="pic">     
+   <div id="pic">    
+        <div id="message">Yellow's Turn</div> 
         <table id="board">
             <tr>
                 <td id="col0row5"></td>
@@ -64,16 +65,16 @@
                 <td id="col5row0"></td>
                 <td id="col6row0"></td>
             </tr>
+
        </table>
+       
   </div>
     <footer>
         <button class="btn">Reset</button>
     </footer>
-    <div id="displayMess" hidden>
-        <div id="divMess">
-            <h1>Winner!</h1>
-            <button id="resbtn">RESET</button>
-        </div>
+    <div id="displayMess">
+        <h1 id="resultMess"></h1>
+        <button id="resbtn">RESET</button>
     </div>
     <script src="js/script.js"></script>
 </body>

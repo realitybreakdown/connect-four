@@ -8,11 +8,12 @@ var playerLookup = {
 
 /*----- app's state (variables) -----*/
 
-var board, winner, turn;
+var board, winner, turn, turnCounter;
 
 /*----- cached element references -----*/
 
 var popUp = document.getElementById('displayMess');
+var resultMess = document.getElementById('resultMess');
 
 /*----- event listeners -----*/
 
@@ -22,17 +23,15 @@ document.getElementById('resbtn').addEventListener('click', reset);
 
 /*----- functions -----*/ 
 function reset() {
-    // if (winner) {
-
-    // }
     initialize();
-    render();
+    render(); 
+    popUp.style.display = "none";
 }
 
 initialize();
+render();
 
 function initialize() {
-    if (winner == true) return false;
     board = [
         [null,null,null,null,null,null],
         [null,null,null,null,null,null],
@@ -46,35 +45,39 @@ function initialize() {
     winner = null;
     turn = 1;
     turnCounter = 0;
-    
 }
 
 function render() {
     board.forEach(function(col, colIdx) {
         col.forEach(function(cell, rowIdx) {
             var td = document.getElementById(`col${colIdx}row${rowIdx}`);
-          
             td.style.backgroundColor = playerLookup[cell];
-
-            
-                // transfer all state to the DOM
         });
     });
+    if (winner) {
+    popMess();
+    }
+    if (tieGame()) {
+        popMess();
+    }
+
+    // document.querySelector("#displayMess").textContent = `${playerLookup[turn]} wins!`
+    document.querySelector("#message").textContent = `${playerLookup[turn]}'s turn`;
 }
 
 function boardClick(evt) {
+    if(winner !== null) return;
     var target = evt.target;
-    if (target.tagName !== 'TD') return;
+    if (target.tagName !== 'TD' || winner) return;
     var col = parseInt(evt.target.id.charAt(3));
     if (!board[col].includes(null)) return;
     // update state (board, turn, winner)
     var row = board[col].indexOf(null);
     board[col][row] = turn;
-    turn *= -1;
+    turnCounter += 1;
     winner = getWinner();
+    turn *= -1;
     render();
-    // checkWinner();
-    
 }
 
 function getWinner() {
@@ -83,12 +86,13 @@ function getWinner() {
          if (board[colIdx][rowIdx] === null) break; 
           winner = checkForWin(colIdx, rowIdx);
             if (winner) break; 
-
-            console.log(colIdx, rowIdx, turn);
         };
         if (winner) break;
     };
+    return winner; 
 };
+
+
 
 function checkForWin(colIdx, rowIdx) {
     winner = upWin(colIdx, rowIdx);
@@ -98,34 +102,44 @@ function checkForWin(colIdx, rowIdx) {
     winner = diagUp(colIdx, rowIdx);
     if (winner) return winner;
     return diagDown(colIdx, rowIdx);
-};
 
+    
+};
 
 function upWin(colIdx, rowIdx) {
     if (rowIdx > 2) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx + 1] + board[colIdx][rowIdx + 2] + board[colIdx][rowIdx + 3]) === 4 ? board[colIdx][rowIdx] : null;
 };
+
 function sideWin(colIdx,rowIdx) {
     if (colIdx > 3) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx] + board[colIdx +2][rowIdx] + board[colIdx + 3][rowIdx]) === 4 ? board[colIdx][rowIdx] : null;
 };
+
 function diagUp(colIdx, rowIdx) {
     if (colIdx > 3) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx + 1] + board[colIdx+ 2][rowIdx + 2] + board[colIdx + 3][rowIdx + 3]) === 4 ? board[colIdx][rowIdx] : null;
 };
+
 function diagDown(colIdx, rowIdx) {
     if (colIdx > 3 && rowIdx < 6) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx - 1] + board[colIdx + 2][rowIdx - 2] + board[colIdx + 3][rowIdx - 3]) === 4 ? board[colIdx][rowIdx] : null;
 };
 
-function toggleBox() {
-    var w = document.getElementById('displayMess');
-    if (w.style.display === 'none') {
-        x.style.display = 'block';
-    } else {
-        x.style.display = 'none';
+function tieGame() {
+    if (winner === null && turnCounter === 42) {
+    return true;
     }
 }
 
-// toggleBox(`Winner is ${turn});
+
+
+function popMess() {
+    popUp.style.display = "block";
+   if (winner) {
+   resultMess.textContent = `${playerLookup[winner]} is the winner!`;
+   } else if (tieGame()) {
+      resultMess.textContent = "Draw";
+   }
+}
 
