@@ -18,6 +18,7 @@ var popUp = document.getElementById('displayMess');
 
 document.getElementById('board').addEventListener('click', boardClick);
 document.querySelector('footer > button').addEventListener('click', reset);
+document.getElementById('resbtn').addEventListener('click', reset);
 
 /*----- functions -----*/ 
 function reset() {
@@ -44,6 +45,7 @@ function initialize() {
     ];
     winner = null;
     turn = 1;
+    turnCounter = 0;
     
 }
 
@@ -115,3 +117,15 @@ function diagDown(colIdx, rowIdx) {
     if (colIdx > 3 && rowIdx < 6) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx - 1] + board[colIdx + 2][rowIdx - 2] + board[colIdx + 3][rowIdx - 3]) === 4 ? board[colIdx][rowIdx] : null;
 };
+
+function toggleBox() {
+    var w = document.getElementById('displayMess');
+    if (w.style.display === 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+
+// toggleBox(`Winner is ${turn});
+
