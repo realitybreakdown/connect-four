@@ -42,7 +42,8 @@ td {
 }
 
 td:hover {
-    background-image: linear-gradient(to bottom, #818740, #F54573);
+    background-image: url("../img/down-arrow (1).png");
+    
 }
 
 .btn {
@@ -62,14 +63,15 @@ td:hover {
     text-decoration: none;
 }
 
-#buttons {
-    position: absolute;
-    top: 29%;
-    left: 37%;
+
+/* #divMess {
+    background-color: red;
+    position: fixed;
 }
 
-
-
+#displayMess {
+    background-color: green;
+} */
 
 
    
