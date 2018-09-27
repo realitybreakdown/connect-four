@@ -12,8 +12,8 @@ var board, winner, turn, turnCounter;
 
 /*----- cached element references -----*/
 
-var popUp = document.getElementById('displayMess');
-var resultMess = document.getElementById('resultMess');
+var popUp = document.getElementById('display-mess');
+var resultMess = document.getElementById('result-mess');
 
 /*----- event listeners -----*/
 

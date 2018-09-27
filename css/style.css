@@ -61,7 +61,7 @@ td:hover {
     text-decoration: none;
 }
 
-#displayMess {
+#display-mess {
     background-image: linear-gradient(to bottom, #D45055 ,orange, #FEFD4F);
     position: fixed;
     width: 200px;
