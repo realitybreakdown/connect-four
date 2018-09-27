@@ -55,21 +55,16 @@ function render() {
             td.style.backgroundColor = playerLookup[cell];
         });
     });
-    if (winner) {
-        popMess();
-    }
-        if (tieGame()) {
-            popMess();
-        }
+    if (winner || tieGame()) popMess();
     document.querySelector("#message").textContent = `${playerLookup[turn]}'s turn`;
 };
 
 function boardClick(evt) {
     if(winner !== null) return;
-        var target = evt.target;
-        if (target.tagName !== 'TD' || winner) return;
-            var col = parseInt(evt.target.id.charAt(3));
-            if (!board[col].includes(null)) return;
+    var target = evt.target;
+    if (target.tagName !== 'TD' || winner) return;
+    var col = parseInt(evt.target.id.charAt(3));
+    if (!board[col].includes(null)) return;
     // update state (board, turn, winner)
     var row = board[col].indexOf(null);
     board[col][row] = turn;
@@ -84,14 +79,12 @@ function getWinner() {
          for (var rowIdx = 0; rowIdx < board[colIdx].length; rowIdx++) {
             if (board[colIdx][rowIdx] === null) break; 
             winner = checkForWin(colIdx, rowIdx);
-                if (winner) break; 
+            if (winner) break; 
         };
         if (winner) break;
     };
     return winner; 
 }
-
-
 
 function checkForWin(colIdx, rowIdx) {
     winner = upWin(colIdx, rowIdx);
@@ -101,8 +94,6 @@ function checkForWin(colIdx, rowIdx) {
     winner = diagUp(colIdx, rowIdx);
     if (winner) return winner;
     return diagDown(colIdx, rowIdx);
-
-    
 }
 
 function upWin(colIdx, rowIdx) {
@@ -126,19 +117,15 @@ function diagDown(colIdx, rowIdx) {
 }
 
 function tieGame() {
-    if (winner === null && turnCounter === 42) {
-    return true;
-    }
+    return (winner === null && turnCounter === 42);
 }
-
-
 
 function popMess() {
     popUp.style.display = "block";
-   if (winner) {
+    if (winner) {
         resultMess.textContent = `${playerLookup[winner]} is the winner!`;
-   } else if (tieGame()) {
+    } else {
         resultMess.textContent = "Draw";
-   }
+    }
 }
 

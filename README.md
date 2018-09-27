@@ -1,39 +1,22 @@
 # Connect Four 
 
-## User Stories 
-* User sees gameboard 
-* User clicks on board
-  
-  
-  
+<img src="https://i.imgur.com/v8BKoe9.png">
 
-## UI Note 
-Main screen has connect four image and game. 
-Clicking on the board starts the game.  
+## Description 
+Players add tokens to a board, trying to create a four-in-a-row match.
+The first player to get four in a row wins. 
 
-## Pseudocode 
-* Store the users selection.
-* Switch to second player
-    * Store player 2's selection
-* Determine if there is a win.  
-* Reset.
+## Technologies
+* Javascript
+* CSS 
 
-## State of the App
-* playerOne = yellow
-* playerTwo = red
+## Getting Started
+https://realitybreakdown.github.io/connect-four/
 
-## Cached Elements  
-* Reset button 
+## Next Steps
+I'd like to update the game with new technologies while I learn more.
+I will most likely change the style to a more stream-lined version.
 
 
-## Events 
-* DOMContentLoaded: 
-  * Grab DOM refs
-  * Attach event listeners 
-* board.click: 
-  * Store players place on board   
-    * store in variable 
-* Display winner
-* Display or enable reset button - or automatically reset?
 
 
