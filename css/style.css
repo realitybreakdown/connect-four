@@ -88,6 +88,11 @@ td:hover {
     padding: 0;
     background-color: #CDCDCD;
 }
+#resbtn:hover, 
+#resbtn:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 2em rgba(#fff,0);
+}
   
 h1 {
     text-align: center;

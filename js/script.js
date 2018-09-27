@@ -22,6 +22,7 @@ document.querySelector('footer > button').addEventListener('click', reset);
 document.getElementById('resbtn').addEventListener('click', reset);
 
 /*----- functions -----*/ 
+
 function reset() {
     initialize();
     render(); 
@@ -45,7 +46,7 @@ function initialize() {
     winner = null;
     turn = 1;
     turnCounter = 0;
-}
+};
 
 function render() {
     board.forEach(function(col, colIdx) {
@@ -55,22 +56,20 @@ function render() {
         });
     });
     if (winner) {
-    popMess();
-    }
-    if (tieGame()) {
         popMess();
     }
-
-    // document.querySelector("#displayMess").textContent = `${playerLookup[turn]} wins!`
+        if (tieGame()) {
+            popMess();
+        }
     document.querySelector("#message").textContent = `${playerLookup[turn]}'s turn`;
-}
+};
 
 function boardClick(evt) {
     if(winner !== null) return;
-    var target = evt.target;
-    if (target.tagName !== 'TD' || winner) return;
-    var col = parseInt(evt.target.id.charAt(3));
-    if (!board[col].includes(null)) return;
+        var target = evt.target;
+        if (target.tagName !== 'TD' || winner) return;
+            var col = parseInt(evt.target.id.charAt(3));
+            if (!board[col].includes(null)) return;
     // update state (board, turn, winner)
     var row = board[col].indexOf(null);
     board[col][row] = turn;
@@ -78,14 +77,14 @@ function boardClick(evt) {
     winner = getWinner();
     turn *= -1;
     render();
-}
+};
 
 function getWinner() {
     for (var colIdx = 0; colIdx < board.length; colIdx++) {
          for (var rowIdx = 0; rowIdx < board[colIdx].length; rowIdx++) {
-         if (board[colIdx][rowIdx] === null) break; 
-          winner = checkForWin(colIdx, rowIdx);
-            if (winner) break; 
+            if (board[colIdx][rowIdx] === null) break; 
+            winner = checkForWin(colIdx, rowIdx);
+                if (winner) break; 
         };
         if (winner) break;
     };
@@ -130,16 +129,16 @@ function tieGame() {
     if (winner === null && turnCounter === 42) {
     return true;
     }
-}
+};
 
 
 
 function popMess() {
     popUp.style.display = "block";
    if (winner) {
-   resultMess.textContent = `${playerLookup[winner]} is the winner!`;
+        resultMess.textContent = `${playerLookup[winner]} is the winner!`;
    } else if (tieGame()) {
-      resultMess.textContent = "Draw";
+        resultMess.textContent = "Draw";
    }
-}
+};
 
