@@ -46,7 +46,7 @@ function initialize() {
     winner = null;
     turn = 1;
     turnCounter = 0;
-};
+}
 
 function render() {
     board.forEach(function(col, colIdx) {
@@ -77,7 +77,7 @@ function boardClick(evt) {
     winner = getWinner();
     turn *= -1;
     render();
-};
+}
 
 function getWinner() {
     for (var colIdx = 0; colIdx < board.length; colIdx++) {
@@ -89,7 +89,7 @@ function getWinner() {
         if (winner) break;
     };
     return winner; 
-};
+}
 
 
 
@@ -103,33 +103,33 @@ function checkForWin(colIdx, rowIdx) {
     return diagDown(colIdx, rowIdx);
 
     
-};
+}
 
 function upWin(colIdx, rowIdx) {
     if (rowIdx > 2) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx + 1] + board[colIdx][rowIdx + 2] + board[colIdx][rowIdx + 3]) === 4 ? board[colIdx][rowIdx] : null;
-};
+}
 
 function sideWin(colIdx,rowIdx) {
     if (colIdx > 3) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx] + board[colIdx +2][rowIdx] + board[colIdx + 3][rowIdx]) === 4 ? board[colIdx][rowIdx] : null;
-};
+}
 
 function diagUp(colIdx, rowIdx) {
     if (colIdx > 3) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx + 1] + board[colIdx+ 2][rowIdx + 2] + board[colIdx + 3][rowIdx + 3]) === 4 ? board[colIdx][rowIdx] : null;
-};
+}
 
 function diagDown(colIdx, rowIdx) {
     if (colIdx > 3 && rowIdx < 6) return null;
     return Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx - 1] + board[colIdx + 2][rowIdx - 2] + board[colIdx + 3][rowIdx - 3]) === 4 ? board[colIdx][rowIdx] : null;
-};
+}
 
 function tieGame() {
     if (winner === null && turnCounter === 42) {
     return true;
     }
-};
+}
 
 
 
@@ -140,5 +140,5 @@ function popMess() {
    } else if (tieGame()) {
         resultMess.textContent = "Draw";
    }
-};
+}
 
